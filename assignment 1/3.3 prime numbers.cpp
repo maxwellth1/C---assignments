@@ -6,13 +6,18 @@ int main(){
     cout << "Enter a number: "; cin >> N;
 
     while(count < N){
-        for(int y = 2; y < N; y++){
-            bool prime = false;
+        bool prime = true;
+        for(int y = 2; y < beg; y++){
             if(beg % y == 0){
-                
+                prime = false;
+                break;
             }
         }
-
-        count++;
+        if(prime){
+            cout << beg << " ";
+            count++;
+        }
+        beg++;
     }
+    return 0;
 }
