@@ -5,7 +5,15 @@ int main(){
     int N;
     while(true){
         cout << "Enter N: "; cin >> N;
-        cout << ((N >= 0 && N % 5 == 0) ? N/5:-1) << "\n"; 
+        if(N % 5 > 0){
+            cout << "-1\n";
+            continue;
+        }
+        if(N < 0){
+            break;
+        }
+        cout << N/5 << "\n";
     }
+    cout<<"Goodbye\n";
     return 0;
 }
