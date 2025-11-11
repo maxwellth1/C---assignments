@@ -12,5 +12,14 @@ class Point{
         
         void setX(const int xx){x = xx;}
         void setY(const int yy){y = yy;}
+};
 
+class PointArray{
+    private:
+        Point *points;
+        int size;
+    public:
+        PointArray();
+        PointArray(const Point pts[], const int size);
+        
 };
