@@ -1,6 +1,4 @@
-#include <iostream>
 #include "geometry.h"
-using namespace std;
 
 PointArray :: PointArray(){
     size = 0;
@@ -25,6 +23,39 @@ PointArray :: PointArray(const PointArray &ca){
 
 PointArray :: ~PointArray(){
     delete[] points;
+}
+
+void PointArray :: resize(int n){
+    if(n < 0) n = 0;
+
+    if(n > capacity){
+        int newCap = (capacity == 0) ? 1 : capacity;
+        while(newCap < n) newCap *= 2;
+        
+        Point *newPts = new Point[newCap];
+
+        for(int x = 0; x < size; x++){
+            newPts[x] = points[x];
+        }
+
+        delete[] points;
+        points = newPts;
+        capacity = newCap;
+    }
+    size = n;
+
+    if(capacity > 0 && size < capacity / 4){
+        int newCap = max(size, capacity / 2);
+        Point *newPts = (newCap > 0) ? new Point[newCap] : nullptr;
+
+        for(int x = 0; x < size; x++){
+            newPts[x] = points[x];
+        }
+
+        delete[] points;
+        points = newPts;
+        capacity = newCap;
+    }
 }
 
 

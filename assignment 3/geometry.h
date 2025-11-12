@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 class Point{
@@ -17,17 +18,11 @@ class Point{
 class PointArray{
     private:
         Point *points;
-        int size;
+        int size; int capacity;
+        void resize(int n);
     public:
         PointArray();
         PointArray(const Point pts[], const int size);
         PointArray(const PointArray &ca);
         ~PointArray();
-
-        void resize(int n){
-            Point *pts = new Point[n];
-
-
-            
-        }
 };
