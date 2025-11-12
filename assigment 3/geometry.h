@@ -21,5 +21,13 @@ class PointArray{
     public:
         PointArray();
         PointArray(const Point pts[], const int size);
-        
+        PointArray(const PointArray &ca);
+        ~PointArray();
+
+        void resize(int n){
+            Point *pts = new Point[n];
+
+
+            
+        }
 };
