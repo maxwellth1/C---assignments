@@ -3,10 +3,12 @@
 //PointArray Definitions
 PointArray :: PointArray(){
     size = 0;
+    capacity = 0;
     points = new Point[size];
 }
 PointArray :: PointArray(const Point pts[], const int sz){
     size = sz;
+    capacity = sz;
     points = new Point[sz];
     for(int x = 0; x < sz; x++){
         points[x] = pts[x];
@@ -15,6 +17,7 @@ PointArray :: PointArray(const Point pts[], const int sz){
 PointArray :: PointArray(const PointArray &ca){
     points = new Point[ca.size];
     size = ca.size;
+    capacity = ca.size;
     for(int x = 0; x < ca.size; x++){
         points[x] = ca.points[x];
     }
@@ -65,13 +68,14 @@ void PointArray :: push_back(const Point &p){
         points = newPts;
         capacity = newCap;
     }
-    points[size + 1] = p;
+    points[size++] = p;
 }
 
 void PointArray :: clear(){
     resize(0);
 }
 void PointArray :: insert(const int pos, const Point &p){
+    if(pos < 0 || pos > size) return;
     resize(size + 1);
     for(int x = size - 1; x > pos; x--){
         points[x] = points[x - 1];
@@ -79,29 +83,28 @@ void PointArray :: insert(const int pos, const Point &p){
     points[pos] = p;
 }
 void PointArray :: remove(const int pos){
-    if(pos > 0 && pos < size){
-        for(int x = 0; x < size - 2; x++){
-            points[x] = points[x + 1];
-        }
-        resize(size - 1);
+    if(pos < 0 || pos >= size) return;
+    for(int x = pos; x < size - 1; x++){
+        points[x] = points[x + 1];
     }
+        resize(size - 1);
 }
 const int PointArray :: getSize() const{
     return size;
 }
 Point* PointArray :: get(const int pos){
-    if(pos < 0 && pos >= size)
+    if(pos < 0 || pos >= size)
         return nullptr;
     return &points[pos];
 }
 const Point* PointArray :: get(const int pos) const{
-    if(pos < 0 && pos >= size)
+    if(pos < 0 || pos >= size)
         return nullptr;
     return &points[pos];
 }
 
-
 //Polygon Definitions
+int Polygon :: numPoly = 0;
 Polygon :: Polygon(Point pointArr[], const int numPoint) : points(pointArr, numPoint){
     numPoly++;
 }
@@ -122,18 +125,18 @@ Point* updateConstructorPoints(const Point &p1 ,
     return constructorPoints ;
 }
 Rectangle :: Rectangle(const Point &lL, const Point &uR) : 
- Polygon(updateConstructorPoints(lL, Point(lL.getX(), lL.getY()), 
-                                 uR, Point(uR.getX(), uR.getY())), 4) 
+ Polygon(updateConstructorPoints(lL, Point(uR.getX(), lL.getY()), 
+                                 uR, Point(lL.getX(), uR.getY())), 4) 
 {}
 Rectangle :: Rectangle(const int lLx, const int lLy, const int uRx, const int uRy) : 
  Polygon(updateConstructorPoints(Point(lLx, lLy), 
+                                 Point(uRx, lLy), 
                                  Point(uRx, uRy), 
-                                 Point(lLx, uRy), 
-                                 Point(uRx, lLy)), 4)
+                                 Point(lLx, uRy)), 4)
 {}
 double Rectangle :: area() const {
-    int length = points.get(0)->getY() + points.get(1)->getY();
-    int width = points.get(0)->getX() + points.get(1)->getX();
+    int length = points.get(1)->getY() - points.get(0)->getY();
+    int width = points.get(2)->getX() - points.get(1)->getX();
     return abs((double) length * width); 
 }
 

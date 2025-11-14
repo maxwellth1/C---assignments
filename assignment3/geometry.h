@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <math.h>
+#include <tuple>
 using namespace std;
 
 //Point Class
@@ -52,7 +53,7 @@ class Polygon{
     //Constructors
         Polygon(Point point[], const int numPoint);
         Polygon(const PointArray &p);
-        ~Polygon(){numPoly--;}
+        virtual ~Polygon(){numPoly--;}
 
     //Functions
         virtual double area() const = 0;
