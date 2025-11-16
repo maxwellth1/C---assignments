@@ -9,3 +9,9 @@ string pigLatinify(const string s){
     else if(vowels.find(s[0]) != string::npos){return s + "way";}
     else {return s.substr(2, s.size() - 1) + "-" + s[0] + "ay";}
 }
+
+int main(){
+    string word;
+    cin >> word;
+    pigLatinify(word);
+}
